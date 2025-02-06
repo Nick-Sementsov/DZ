@@ -1,0 +1,30 @@
+using System.Collections.Concurrent;
+
+namespace Dop_zadanie1
+{
+    internal class Program
+    {
+
+
+
+
+
+        static void Main(string[] args)
+        {
+           
+                static void  SummaChisel()
+                {
+                    int[] arr = new int[10];
+                    for (int i = 0; i < arr.Length; i++)
+                    {
+                        arr[i] = Random.Shared.Next(0, 15);
+                        Console.Write($"Числа массива: {arr[i]} ");
+
+
+                    }
+
+
+                }
+            }
+        }
+    }
