@@ -1,0 +1,126 @@
+namespace X_O
+{
+    internal class Program
+    {
+
+
+
+        public class TicTacToe
+        {
+            public static void Main(string[] args)
+            {
+                char[,] board = new char[3, 3];
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        board[i, j] = ' ';
+                    }
+                }
+
+                char currentPlayer = 'X';
+                bool gameWon = false;
+                int moves = 0;
+
+                while (!gameWon && moves < 9)
+                {
+                    Console.Clear();
+                    PrintBoard(board);
+
+                    Console.WriteLine("Ход игрока " + currentPlayer + ":");
+                    int row, col;
+
+                    while (true)
+                    {
+                        Console.Write("Введите номер строки (0-2): ");
+                        if (int.TryParse(Console.ReadLine(), out row) && row >= 0 && row < 3)
+                        {
+                            break;
+                        }
+                        Console.WriteLine("Некорректный ввод. Попробуйте снова.");
+                    }
+
+                    while (true)
+                    {
+                        Console.Write("Введите номер столбца (0-2): ");
+                        if (int.TryParse(Console.ReadLine(), out col) && col >= 0 && col < 3)
+                        {
+                            break;
+                        }
+                        Console.WriteLine("Некорректный ввод. Попробуйте снова.");
+                    }
+
+                    if (board[row, col] == ' ')
+                    {
+                        board[row, col] = currentPlayer;
+                        moves++;
+
+                        if (CheckWin(board, currentPlayer))
+                        {
+                            gameWon = true;
+                        }
+                        else
+                        {
+                            currentPlayer = currentPlayer == 'X' ? 'O' : 'X';
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Эта клетка уже занята. Попробуйте снова.");
+                    }
+                }
+
+                Console.Clear();
+                PrintBoard(board);
+
+                if (gameWon)
+                {
+                    Console.WriteLine("Победил игрок " + currentPlayer + "!");
+                }
+                else
+                {
+                    Console.WriteLine("Ничья!");
+                }
+
+                Console.ReadKey();
+            }
+
+            static void PrintBoard(char[,] board)
+            {
+                Console.WriteLine("  0 1 2");
+                Console.WriteLine("-------");
+                for (int i = 0; i < 3; i++)
+                {
+                    Console.Write(i + "|");
+                    for (int j = 0; j < 3; j++)
+                    {
+                        Console.Write(board[i, j] + "|");
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine("-------");
+                }
+            }
+
+            static bool CheckWin(char[,] board, char player)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (board[i, 0] == player && board[i, 1] == player && board[i, 2] == player ||
+                        board[0, i] == player && board[1, i] == player && board[2, i] == player)
+                    {
+                        return true;
+                    }
+                }
+
+                if (board[0, 0] == player && board[1, 1] == player && board[2, 2] == player ||
+                    board[0, 2] == player && board[1, 1] == player && board[2, 0] == player)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+    }
+}
+
